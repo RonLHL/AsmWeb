@@ -16,7 +16,7 @@ function checkError($clnFeedback) {
 }
 
 function generateFeedbackId($lastFeedbackId) {
-    $lastIdNumeric = (int)substr($lastFeedbackId, 1);
+    $lastIdNumeric = (int) substr($lastFeedbackId, 1);
 
     $newIdNumeric = $lastIdNumeric + 1;
 
@@ -25,9 +25,7 @@ function generateFeedbackId($lastFeedbackId) {
     return $newFeedbackId;
 }
 
-
 $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
 
 if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
@@ -37,14 +35,12 @@ if ($con->connect_error) {
 $sql = "SELECT MAX(feedback_id) AS max_id FROM feedback";
 $result = $con->query($sql);
 
-
 $row = $result->fetch_assoc();
 $lastFeedbackId = $row['max_id'];
 
 $newFeedbackId = generateFeedbackId($lastFeedbackId);
 
 $con->close();
-
 ?>
 
 <!DOCTYPE html>
@@ -55,21 +51,37 @@ $con->close();
         <link href="css/style.css" rel="stylesheet" type="text/css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <style>
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh; /* Full viewport height */
+        }
+        .form-outline {
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
     </head>
     <body>
-        <?php include ('memberHeader.php');?>
-        <h2>Please leave a feedback</h2>
+        <?php include ('memberHeader.php'); ?>
+<div class="form-container">
         <form action="" method="POST">
-            <input type="text" name="feedback" value="" size="30" maxlength="100"/>
-            <input type="submit" value="Submit" name="btnSubmitFeedback" />
+            <div class="form-outline" data-mdb-input-init>
+                <input type="text" id="feeeback" class="form-control" maxlength="100" name="feedback" value="" size="40" />
+                <div id="feedbacktext" class="form-text">
+                    Please enter your feedback here.
+                </div>
+                <input type="submit" value="Submit" name="btnSubmitFeedback" />
+            </div>
         </form>
-
+</div>
         <?php
         if (isset($_POST["btnSubmitFeedback"])) {
             $feedback = trim($_POST["feedback"]);
             $clnFeedback = htmlspecialchars($feedback);
             $error = checkError($clnFeedback);
-            
 
             if (empty($error)) {
                 $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -80,7 +92,7 @@ $con->close();
                 if ($stmt->affected_rows > 0) {
                     //insert successfully
                     echo '<script>';
-                    echo 'alert(" ' . $username . '. Your Feedback Have been successfully added'.'");';  // Show the alert
+                    echo 'alert(" ' . $username . '. Your Feedback Have been successfully added' . '");';  // Show the alert
                     echo 'setTimeout(function() { window.location.href = "memberEvent.php"; }, 2000);';  // Delay the redirection
                     echo '</script>';
                 } else {
@@ -94,6 +106,9 @@ $con->close();
                 echo $error;
             }
         }
+        ?>
+        <?php
+        include ('footer.php');
         ?>
 
     </body>
