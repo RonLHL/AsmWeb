@@ -1,0 +1,229 @@
+<?php
+if(isset($_POST['logout'])){
+if (isset($_COOKIE["login-user"])) {
+    // Unset the cookie by setting its expiration time to the past
+    setcookie("login-user", "", time() - 3600);
+    $message = "LogOut Successful.";
+    echo '<script>';
+    echo 'alert("' . $message . '");';
+    echo 'setTimeout(function() { window.location.href = "home.php"; }, 1000);';
+    echo '</script>';
+} else {
+    $message = "Error, do not have any cookies.";
+    echo '<script>';
+    echo 'alert("' . $message . '");';
+    echo 'setTimeout(function() { window.location.href = "home.php"; }, 1000);';
+    echo '</script>';
+}
+}
+
+?>
+
+<?php
+    $header = array(
+            "event_id" => "Event ID",
+            "event_name" => "Event Name",
+            "event_img" => "Image",
+            "event_desc" => "Description",
+            "event_venue" => "Venue",
+            "event_status" => "Status",
+            "date" => "Date",
+            "time" => "Time",
+            "price" => "Price"
+    );
+    
+    //search
+    if(empty($_GET)){
+        $name = "%";
+    }else{
+        $name = $_GET['event_name'];
+    }
+?>
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to edit this template
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Member Event Page</title>
+        <style>
+            .main{
+                text-align: center;
+            }
+            .img{
+                width: 50%;
+            }
+            .desc{
+                text-align: justify;
+                padding: 2%;
+                font-size: 24px;
+            }
+            .line{
+                font-size: 18px;
+            }
+            
+            .joinEvent{
+                border-radius: 50%;
+                background-color: lightblue;
+                width: 120px;
+                height: 80px;
+                font-size: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <?php
+            include ('memberHeader.php');
+            require_once './secret/helper-event.php';
+        ?>
+        <div class="main">
+            <h1>Existing Event Info</h1>
+            <form action="" method="GET">
+                <input class="search" type="search" name="event_name" placeholder="Searching..."/>
+            </form>
+            <br>
+            <form>
+            <?php
+                $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                if($con -> connect_error){
+                    die("Connection failed: ". $con->connect_error);
+                }
+
+                $sql = "SELECT * FROM Event WHERE EVENT_NAME LIKE '$name%' AND STATUS = 'A'";
+
+                //pass sql into connection to execute
+                $result = $con->query($sql);
+
+                //check if $result contains record??
+                if($result->num_rows >0){
+                   //record returned
+                    while($row = $result->fetch_object()){
+                        $image = $row->event_img;
+                        foreach(glob("uploads/$image.{jpg,jpeg,png,gif}", GLOB_BRACE) as $file) {
+                            $basename = pathinfo($file, PATHINFO_BASENAME);              
+                        }
+                        $time = date('g:i A', strtotime($row->time));
+                        
+                        printf("<div class='event-info'>
+                            <h1>%s</h1>
+                            <img class='img' src='%s' alt=''/>
+                            <p class='desc'>%s</p>
+                            <div class='line'>Venue: %s <br>
+                                Status: %s <br>
+                                Date: %s | Time: %s | Price: RM%.2f <br>
+                                </tr>", $row->event_name, $file,$row->event_desc 
+                                      ,$row->event_venue, getEventStatus()[$row->status]
+                                      ,$row->date, $time, $row->price
+                                      ,$row->event_id);
+                        }
+                    } else {
+                        echo "<h1 style='color:red'>Existing Event <b>NOT</b> Found!</h1>";
+                    }
+
+                    $result->free();
+                    $con->close();
+                ?>
+            </form>
+            <br>
+            <br>
+            <!-- Comment Section -->
+            <?php
+            if (isset($_POST["btnSubmitFeedback"])) {
+                $feedback = trim($_POST["feedback"]);
+                $event = getEvent($event_id);
+                $user = getUser();
+                $clnFeedback = htmlspecialchars($feedback);
+                $error = checkError($clnFeedback);
+
+                if (empty($error)) {
+                    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                    $sql = "INSERT INTO user (feedback_id, feedback_desc, username, event_id) VALUES(?,?,?,?)";
+                    $stmt = $con->prepare($sql);
+                    $stmt->bind_param("isss", $clnFeedback, $event, $user);
+                    $stmt->execute();
+                    if ($stmt->affected_rows > 0) {
+                        //insert successfully
+                        printf("<div class='info'>
+                            Your Feedback has been inserted.
+                           </div>");
+                    } else {
+                        //unable to insert
+                        echo "Database Error, Unable to insert. Please try again!";
+                    }
+                    $stmt->close();
+                    $con->close();
+                } else {
+                    // Display error message
+                    echo $error;
+                }
+            }
+            ?>
+            <div class="comment-section">
+                <h2>Feedback</h2>
+                <form action="" method="POST">
+                    <div class="form-group">
+                        <label for="event_id">Select Event:</label>
+                        <select class="form-control" id="event_id" name="event_id">
+                            <?php
+                            $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                            if ($con->connect_error) {
+                                die("Connection failed: " . $con->connect_error);
+                            }
+
+                            $sql = "SELECT event_id, event_name FROM Event WHERE STATUS = 'A'";
+                            $result = $con->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<option value='" . $row['event_id'] . "'>" . $row['event_name'] . "</option>";
+                                }
+                            }
+
+                            $result->free();
+                            $con->close();
+                            ?>
+                        </select>
+                        <input type="hidden" id="selected_event_id" name="selected_event_id">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="comment" rows="3" placeholder="Write your feedback..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="btnSubmitFeedback">Submit</button>
+                </form>
+                <br>
+                <div class="comments">
+                    <?php
+                    // Sample comments retrieval (You should replace this with actual database retrieval)
+                    $comments = [
+                        ["author" => "John Doe", "text" => "Great event!"],
+                        ["author" => "Jane Smith", "text" => "Looking forward to it!"]
+                    ];
+
+                    foreach ($comments as $comment) {
+                        echo '<div class="comment-box">';
+                        echo '<h5>' . htmlspecialchars($comment['author']) . '</h5>';
+                        echo '<p>' . htmlspecialchars($comment['text']) . '</p>';
+                        echo '</div>';
+                    }
+                    ?>
+                </div>
+            </div>
+        <!-- End of Comment Section -->
+        </div>
+        <?php include ('footer.php'); ?>
+        <script>
+        function updateHiddenEventId() {
+            var selectedEventId = document.getElementById("event_id").value;
+            document.getElementById("selected_event_id").value = selectedEventId;
+        }
+        // Initialize hidden field with selected value on page load
+        document.addEventListener("DOMContentLoaded", function() {
+            updateHiddenEventId();
+        });
+        </script>
+    </body>
+</html>
