@@ -20,6 +20,22 @@ if(isset($_POST['logout'])){
     }
 }
 
+function getUserId($username) {
+    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    $sql = "SELECT user_id FROM user WHERE username = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $userId = null;
+    if ($row = $result->fetch_assoc()) {
+        $userId = $row['user_id'];
+    }
+    $stmt->close();
+    $con->close();
+    return $userId;
+}
+
 $username = $_GET['username'];
 $eventIDs = $_GET['eventIDs'];
 $total = $_GET['total'];
@@ -61,13 +77,20 @@ $total = $_GET['total'];
             $CVV = trim($_POST["cvv"]);
             $amount = trim($_POST["totalAmount"]);
             $paymentMethod = trim($_POST["paymentMethod"]);
+            
 
+            if($paymentMethod !== "Touch N Go"){
             //1.2 check/validate/ verify member detail
             $error["nameOnCard"] = checkUserName($cardName);
             $error["totalaAmount"] = checkTotalAmount($amount);
             $error["paymentMethod"] = checkPaymentMethod($paymentMethod);
             $message = ". You Have Been Purchasing Successful.";
-
+            }else{
+            $error["nameOnCard"] = "";
+            $error["totalaAmount"] = "";
+            $error["paymentMethod"] = "";
+            $message = ". You Have Been Purchasing Successful.";
+            }
             //NOTE: when the $error array contains null value
             //array_filter() will remove it
             $error = array_filter($error);
@@ -86,8 +109,8 @@ $total = $_GET['total'];
 
                 if ($stmt->affected_rows > 0) {
                     echo '<script>';
-                    echo 'alert(" ' . $fullname . $message . '");';  // Show the alert
-                    echo 'setTimeout(function() { window.location.href = "login.php"; }, 1000);';  // Delay the redirection
+                    echo 'alert(" ' . $username . $message . '");';  // Show the alert
+                    echo 'setTimeout(function() { window.location.href = "feedback.php"; }, 1000);';  // Delay the redirection
                     echo '</script>';
                 } else {
                     echo "Database Error, Usable to insert.Please try again!";
@@ -106,7 +129,7 @@ $total = $_GET['total'];
         ?>
         <div class="container mt-5">
             <div class="row">
-                <form action="feedback.php" method="POST">
+                <form action="" method="POST">
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username:</label>
