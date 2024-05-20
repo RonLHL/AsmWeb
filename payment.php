@@ -20,21 +20,28 @@ if(isset($_POST['logout'])){
     }
 }
 
-function getUserId($username) {
-    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    $sql = "SELECT user_id FROM user WHERE username = ?";
-    $stmt = $con->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $userId = null;
-    if ($row = $result->fetch_assoc()) {
-        $userId = $row['user_id'];
-    }
-    $stmt->close();
-    $con->close();
-    return $userId;
-}
+//if(isset($_COOKIE['login-user'])) {
+//    //retrieve the value from the cookie
+//    $username = $_COOKIE['login-user'];
+//} else {
+//    echo "Cookie 'login-user' is not set.";
+//}
+
+//function getUserId($username) {
+//    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+//    $sql = "SELECT user_id FROM user WHERE username = ?";
+//    $stmt = $con->prepare($sql);
+//    $stmt->bind_param("s", $username);
+//    $stmt->execute();
+//    $result = $stmt->get_result();
+//    $userId = null;
+//    if ($row = $result->fetch_assoc()) {
+//        $userId = $row['user_id'];
+//    }
+//    $stmt->close();
+//    $con->close();
+//    return $userId;
+//}
 
 $username = $_GET['username'];
 $eventIDs = $_GET['eventIDs'];
@@ -69,7 +76,7 @@ $total = $_GET['total'];
         if (!empty($_POST)) {
             //user click/ submit the page
             //1.1 receive user input from form
-            $username = strtoupper(trim($_POST["username"]));
+            $username = trim($_POST["username"]);
             $eventID = trim($_POST["eventID"]);
             $cardName = trim($_POST["nameOnCard"]);
             $cardNumber = trim($_POST["cardNumber"]);
@@ -110,7 +117,7 @@ $total = $_GET['total'];
                 if ($stmt->affected_rows > 0) {
                     echo '<script>';
                     echo 'alert(" ' . $username . $message . '");';  // Show the alert
-                    echo 'setTimeout(function() { window.location.href = "feedback.php"; }, 1000);';  // Delay the redirection
+                    echo 'setTimeout(function() { window.location.href = "feedback.php?event_id='. $eventID . '&username='. $username .'"; }, 1000);';  // Delay the redirection
                     echo '</script>';
                 } else {
                     echo "Database Error, Usable to insert.Please try again!";
