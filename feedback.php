@@ -5,7 +5,7 @@ define("DB_PASS", "");
 define("DB_NAME", "assignment");
 
 $username = $_GET['username'];
-$eventID = $_GET['event_id'];
+$eventIDs = explode(',', $_GET['event_id']);
 
 function checkError($clnFeedback) {
     $pattern = '/[#$^*]/';
@@ -37,8 +37,6 @@ $result = $con->query($sql);
 
 $row = $result->fetch_assoc();
 $lastFeedbackId = $row['max_id'];
-
-$newFeedbackId = generateFeedbackId($lastFeedbackId);
 
 $con->close();
 ?>
@@ -85,6 +83,9 @@ $con->close();
 
             if (empty($error)) {
                 $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                foreach ($eventIDs as $eventID) {
+                $newFeedbackId = generateFeedbackId($lastFeedbackId);
+                $lastFeedbackId = $newFeedbackId;
                 $sql = "INSERT INTO feedback (feedback_id, feedback_desc, username, event_id) VALUES(?,?,?,?)";
                 $stmt = $con->prepare($sql);
                 $stmt->bind_param("ssss", $newFeedbackId, $clnFeedback, $username, $eventID);
@@ -100,6 +101,7 @@ $con->close();
                     echo "Database Error, Unable to insert. Please try again!";
                 }
                 $stmt->close();
+                }
                 $con->close();
             } else {
                 // Display error message
