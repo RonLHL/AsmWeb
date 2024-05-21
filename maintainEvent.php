@@ -22,6 +22,7 @@ if (isset($_COOKIE["login-user"])) {
     $header = array(
             "event_id" => "Event ID",
             "event_name" => "Event Name",
+            "event_organizer" => "Event Organizer",
             "event_img" => "Image",
             "event_desc" => "Description",
             "event_venue" => "Venue",
@@ -175,6 +176,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                                 <td><input type='checkbox' name='checked[]' value='%s' /></td>
                                 <td class='eventId'>%s</td>
                                 <td class='eName'>%s</td>
+                                <td class='eName'>%s</td>
                                 <td><img class='event-img' src='%s' alt=''/></td>
                                 <td class='desc'>%s</td>
                                 <td class='venue'>%s</td>
@@ -186,7 +188,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                                     <a href='edit-event.php?id=%s'>Edit</a>
                                     <a href='delete-event.php?id=%s'>Delete</a>
                                 </td>
-                                </tr>",$row->event_id, $row->event_id , $row->event_name, $file
+                                </tr>",$row->event_id, $row->event_id , $row->event_name, $row->event_organizer, $file
                                       ,$row->event_desc ,$row->event_venue, getEventStatus()[$row->status]
                                       ,$row->date, $row->time, $row->price
                                       ,$row->event_id, $row->event_id);

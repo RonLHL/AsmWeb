@@ -72,6 +72,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 if($row = $result->fetch_object()){
                     $id = $row->event_id ;
                     $name = $row->event_name;
+                    $organizer = $row->event_organizer;
                     $img = $row->event_img;
                     $desc = $row->event_desc;
                     $venue = $row->event_venue; 
@@ -88,6 +89,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                         <table border='1' style='background-color:white;'>
                             <tr><td>Event ID: </td><td>%s</td></tr>
                             <tr><td>Event Name: </td><td>%s</td></tr>
+                            <tr><td>Event Organizer: </td><td>%s</td></tr>
                             <tr><td>Image: </td><td><img class='event-img' src='%s' alt=''/></td></tr>
                             <tr><td>Event Description: </td><td>%s</td></tr>
                             <tr><td>Event Venue: </td><td>%s</td></tr>
@@ -103,7 +105,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                             <input type='submit' value='Yes' name='btnYes' />
                             <input type='button' value='Cancel' name='btnCancel' id='cancel'/>
                         </form>
-                        ", $id, $name, $file, $desc, $venue, getEventStatus()[$status], $date, $time, $price, $id, $name, $file);
+                        ", $id, $name, $organizer, $file, $desc, $venue, getEventStatus()[$status], $date, $time, $price, $id, $name, $file);
                     
                 }else{
                     echo "Unable to process.[<a href='maintainEvent.php'>Try again</a>]";
