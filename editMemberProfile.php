@@ -1,22 +1,21 @@
 <?php
-if(isset($_POST['logout'])){
-if (isset($_COOKIE["login-user"])) {
-    // Unset the cookie by setting its expiration time to the past
-    setcookie("login-user", "", time() - 3600);
-    $message = "LogOut Successful.";
-    echo '<script>';
-    echo 'alert("' . $message . '");';
-    echo 'setTimeout(function() { window.location.href = "home.php"; }, 1000);';
-    echo '</script>';
-} else {
-    $message = "Error, do not have any cookies.";
-    echo '<script>';
-    echo 'alert("' . $message . '");';
-    echo 'setTimeout(function() { window.location.href = "home.php"; }, 1000);';
-    echo '</script>';
+if (isset($_POST['logout'])) {
+    if (isset($_COOKIE["login-user"])) {
+        // Unset the cookie by setting its expiration time to the past
+        setcookie("login-user", "", time() - 3600);
+        $message = "LogOut Successful.";
+        echo '<script>';
+        echo 'alert("' . $message . '");';
+        echo 'setTimeout(function() { window.location.href = "home.php"; }, 1000);';
+        echo '</script>';
+    } else {
+        $message = "Error, do not have any cookies.";
+        echo '<script>';
+        echo 'alert("' . $message . '");';
+        echo 'setTimeout(function() { window.location.href = "home.php"; }, 1000);';
+        echo '</script>';
+    }
 }
-}
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -65,12 +64,12 @@ if (isset($_COOKIE["login-user"])) {
                         if ($_SERVER["REQUEST_METHOD"] == "GET") {
                             // Retrieve username from the URL
                             if (isset($_GET['username'])) {
-                                $userName = strtoupper(trim($_GET['username']));
+                                $userName = trim($_GET['username']);
                             } else {
                                 $userName = "";
                             }
-                            
-                            
+
+
                             // Create database connection
                             $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
@@ -91,7 +90,6 @@ if (isset($_COOKIE["login-user"])) {
                                 $birthDate = $row->birthdate;
                                 $phoneNumber = $row->phone_number;
                                 $email = $row->email_address;
-                                $password = $row->password;
                             } else {
                                 // Record not found
                                 echo "Unable to find user with username: $userName";
@@ -102,6 +100,12 @@ if (isset($_COOKIE["login-user"])) {
                             $stmt->close();
                             $con->close();
                         } else {
+                            if (isset($_GET['username'])) {
+                                $userName = trim($_GET['username']);
+                            } else {
+                                $userName = "";
+                            }
+
                             $fullName = trim($_POST["mbFullName"]);
                             $gender = isset($_POST["mbGender"]) ? trim($_POST["mbGender"]) : "";
                             $birthDate = trim($_POST["mbBirthdate"]);
@@ -128,7 +132,7 @@ if (isset($_COOKIE["login-user"])) {
                                 $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
                                 // Prepare SQL statement
-                                $sql = "UPDATE USER SET FULLNAME = ?, GENDER = ?, BIRTHDATE = ?, PHONE_NUMBER = ?, EMAIL_ADDRESS = ? WHERE USERNAME = ?";
+                                $sql = "UPDATE user SET fullname = ?, gender = ?, birthdate = ?, phone_number = ?, email_address = ? WHERE username = ?";
                                 $stmt = $con->prepare($sql);
                                 $stmt->bind_param("ssssss", $fullName, $gender, $birthDate, $phoneNumber, $email, $userName);
                                 $stmt->execute();
@@ -136,6 +140,10 @@ if (isset($_COOKIE["login-user"])) {
                                 // Check if update was successful
                                 if ($stmt->affected_rows > 0) {
                                     echo "<div class='info'>Profile <b>$userName</b> has been updated.</div>";
+                                    echo '<script>';
+                                    echo 'alert(" ' . $username . ' has been updated'.'");';  // Show the alert
+                                    echo 'setTimeout(function() { window.location.href = "memberEvent.php"; }, 1000);';  // Delay the redirection
+                                    echo '</script>';
                                 } else {
                                     echo "Database Error, unable to update. Please try again!";
                                 }
@@ -179,20 +187,17 @@ if (isset($_COOKIE["login-user"])) {
                                 <tr>
                                     <td class="profile-info"><strong>Date of Birth:</strong></td>
                                     <td><input type="date" name="mbBirthdate" value="<?php echo isset($birthDate) ? $birthDate : ""; ?>" /></td>
-                                <td><span class="errorMsg"><?php echo $errors["mbBirthdate"] ?? ''; ?></span></td>
+                                    <td><span class="errorMsg"><?php echo $errors["mbBirthdate"] ?? ''; ?></span></td>
                                 </tr>
                                 <tr>
                                     <td class="profile-info"><strong>Phone number:</strong></td>
                                     <td><input type="text" name="mbPhoneNum" value="<?php echo isset($phoneNumber) ? $phoneNumber : ""; ?>" /></td>
-                                <td><span class="errorMsg"><?php echo $errors["mbPhoneNum"] ?? ''; ?></span></td>
+                                    <td><span class="errorMsg"><?php echo $errors["mbPhoneNum"] ?? ''; ?></span></td>
                                 </tr>
                                 <tr>
                                     <td class="profile-info"><strong>Email:</strong></td>
                                     <td><input type="text" name="mbEmail" value="<?php echo isset($email) ? $email : ""; ?>" /></td>
-                                <td><span class="errorMsg"><?php echo $errors["mbEmail"] ?? ''; ?></span></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="hidden" name="mbPassword" value="" size="15" /></td>
+                                    <td><span class="errorMsg"><?php echo $errors["mbEmail"] ?? ''; ?></span></td>
                                 </tr>
                             </table>
                             <input type="submit" value="Edit Profile" name="btnEditMbProfile" />
