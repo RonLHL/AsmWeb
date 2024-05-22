@@ -59,7 +59,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 $feedback_desc = $row->feedback_desc;
             } else {
                 //record is not found
-                echo "Unable to process. [<a href = 'memberProfile.php'>Try again.</a>]";
+                echo "Unable to process. [<a href = 'feedbackHistory.php'>Try again.</a>]";
             }
             $result->free();
             $con->close();
@@ -107,7 +107,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                         //insert successfully
                         printf("<div class = 'info'>
                                 Your Feedback <b>%s</b> has been updated.
-                                [ <a href = 'memberProfile.php'>Back to Profile</a> ]
+                                [ <a href = 'feedbackHistory.php'>Back to Home</a> ]
                                </div>", $feedback_id);
                     } else {
                         //unable to insert
@@ -142,8 +142,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 </tr>
             </table>
             <br>
-            <input type="submit" value="Update" name="btnUpdate" />
-            <input type="button" value="Cancel" name="btnCancel" onclick = "location = 'feedbackHistory.php'"/>
+            <input type="submit" value="Update" name="btnUpdate" class="btn btn-secondary"/>
+            <input type="button" value="Cancel" name="btnCancel" class="btn btn-secondary" onclick = "location = 'feedbackHistory.php'"/>
         </form>
         <?php include 'footer.php' ?>
     </body>

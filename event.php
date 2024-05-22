@@ -27,6 +27,7 @@ if (isset($_COOKIE["login-user"])) {
             "event_desc" => "Description",
             "event_venue" => "Venue",
             "event_status" => "Status",
+            "event_organizer" => "Organizer",
             "date" => "Date",
             "time" => "Time",
             "price" => "Price"
@@ -106,9 +107,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                             <p class='desc'>%s</p>
                             <div class='line'>Venue: %s <br>
                                 Status: %s <br>
+                                Organised by: %s <br>
                                 Date: %s | Time: %s | Price: RM%.2f <br>
                                 </tr>", $row->event_name, $file,$row->event_desc 
                                       ,$row->event_venue, getEventStatus()[$row->status]
+                                      ,$row->event_organizer
                                       ,$row->date, $time, $row->price
                                       ,$row->event_id);
                         }

@@ -16,7 +16,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             <h1> 
                 <nav class="nav">
                     <img class = "logo" src="img/logo.jpg" alt=""/>
-                    <span>Gaming Society</span>
+                    <span>ROY Gaming Society</span>
                 </nav>
             </h1>
             <h2>

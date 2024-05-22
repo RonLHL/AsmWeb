@@ -64,17 +64,17 @@ $con->close();
     </head>
     <body>
         <?php include ('memberHeader.php'); ?>
-<div class="form-container">
-        <form action="" method="POST">
-            <div class="form-outline" data-mdb-input-init>
-                <input type="text" id="feeeback" class="form-control" maxlength="100" name="feedback" value="" size="40" />
-                <div id="feedbacktext" class="form-text">
+<div class="container form-container">
+        <form action="" method="POST" class="form-outline">
+            <div class="form-group">
+                <textarea class="form-control" name="feedback" rows="3" placeholder="Write your feedback..."></textarea>
+                <div id="feedback" class="form-text">
                     Please enter your feedback here.
                 </div>
-                <input type="submit" value="Submit" name="btnSubmitFeedback" />
+                <button type="submit" class="btn btn-primary mt-2" name="btnSubmitFeedback">Submit</button>
             </div>
         </form>
-</div>
+    </div>
         <?php
         if (isset($_POST["btnSubmitFeedback"])) {
             $feedback = trim($_POST["feedback"]);

@@ -80,13 +80,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                             </table>
                             <form action = '' method = 'POST'>
                                 <input type='hidden' name='feedbackId' value='%s'/>
-                                <input type='submit' value='Yes' name='btnYes' />
-                                <input type='button' value='Cancel' name='btnCancel' onclick='location.href='/memberProfile.php'' />
+                                <input type='submit' value='Yes' name='btnYes' class='btn btn-secondary'/>
+                                <input type='button' value='Cancel' name='btnCancel' class='btn btn-secondary' onclick=\"location.href='feedbackHistory.php'\" />
                             </form>",
                             $feedback_id, $userName, $event_id, $feedback_desc, $feedback_id);
                 }else{
                     //record is not found
-                    echo "Unable to process. [<a href = 'memberProfile.php'>Try again.</a>]";
+                    echo "Unable to process. [<a href = 'feedbackHistory.php'>Try again.</a>]";
                 }
                     $result->free();
                     $con->close();
@@ -113,10 +113,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 
                 if($stmt->affected_rows > 0){
                     //delete successful
-                    printf("<div class = 'info'>Feedback <b>%s</b> has been deleted! [<a href = 'memberProfile.php'>Back to list</a>]</div>", $id);
+                    printf("<div class = 'info'>Feedback <b>%s</b> has been deleted! [<a href = 'feedbackHistory.php'>Back to list</a>]</div>", $id);
                 }else{
                     //unable to delete
-                    echo "<div class = 'error'>Error, cannot delete record. [ <a href = 'memberProfile.php'>Try again</a> ]</div>";
+                    echo "<div class = 'error'>Error, cannot delete record. [ <a href = 'feedbackHistory.php'>Try again</a> ]</div>";
                 }
             }
         ?>
