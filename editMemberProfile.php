@@ -158,6 +158,17 @@ if (isset($_POST['logout'])) {
                         <form method="POST" action="">
                             <table>
                                 <tr>
+                                <div>
+                                    
+                                </div>
+                                </tr>
+                                <tr>
+                                    <?php
+                                    printf("<input type='button' value='Take Photo' onclick=\"location.href='capture.php?username=%s'\"' />",$userName);
+                                    ?>
+                                
+                                </tr>
+                                <tr>
                                     <td class="profile-info"><strong>Full Name:</strong></td>
                                     <td><input type="text" name="mbFullName" value="<?php echo isset($fullName) ? $fullName : ""; ?>" /></td>
                                     <td><span class="errorMsg"><?php echo $errors["mbFullName"] ?? ''; ?></span></td>
