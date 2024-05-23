@@ -52,7 +52,6 @@ if(isset($_COOKIE['login-user'])) {
                         <th scope="col">Feedback ID</th>
                         <th scope="col">Event ID</th>
                         <th scope="col">Feedback Description</th>
-                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,8 +69,9 @@ if(isset($_COOKIE['login-user'])) {
                             <td>%s</td>
                             <td>%s</td>
                             <td>%s</td>
-                            <td><a href = 'editFeedback.php?id=%s'>Update</a> | <a href = 'deleteFeedback.php?id=%s'>Delete</a></td></tr>"
-                            , $row->feedback_id, $row->event_id, $row->feedback_desc,$row->feedback_id,$row->feedback_id);
+                            </tr>
+                            "
+                            , $row->feedback_id, $row->event_id, $row->feedback_desc);
                         }
                     }
                     $result->free();

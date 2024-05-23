@@ -150,7 +150,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 if ($stmt->affected_rows > 0) {
                     printf("
                             <div class='info'>Event information<b>%s</b> has been updated!
-                            [ <a href='maintainEvent.php'>Back to List</a> ]
+                            [ <a href='maintainEvent.php'>Back to Event List</a> ]
                             </div>
                             ", $name);
                 } else {

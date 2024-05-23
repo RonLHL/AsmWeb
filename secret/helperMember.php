@@ -132,6 +132,7 @@ if (isset($_COOKIE["login-user"])) {
     //pass sql into connection to execute
     $result = $con->query($sql);
     if($row = $result->fetch_object()){
+    $img = './profileImg/' . $row->profile_picture;
     $fullname = $row->fullname ;
     $gender = $row->gender;
     $birthDate = $row->birthdate;

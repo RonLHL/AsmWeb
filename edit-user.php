@@ -88,7 +88,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 $con->close();
             
             }else{
-                $username = strtoupper(trim($_POST["hdName"]));
+                $username = trim($_POST["hdName"]);
                 $fullname = trim($_POST["txtName"]);
                 $birthdate = trim($_POST["txtBirth"]);
                 $phone = trim($_POST["txtPhone"]);
@@ -124,11 +124,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     if($stmt->affected_rows > 0){
                         printf("
                             <div class='info'>User information <b>%s</b> has been updated!
-                            [ <a href='maintainUser.php'>Back to List</a> ]
+                            [ <a href='maintainUser.php'>Back to Member List</a> ]
                             </div>
                             ", $username);
                     }else{
-                        echo "Database Error, Usable to insert.Please try again!";
+                        echo "Database Error, Unable to insert.Please try again!";
                     }
                     $con->close();
                     $stmt->close();

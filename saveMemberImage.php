@@ -10,15 +10,31 @@ define("DB_USER", "root");
 define("DB_PASS", "");
 define("DB_NAME", "assignment");
 
-$con = mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-$filename = time() . 'jpg';
-$filepath = 'uploads/';
-if (!is_dir($filepath)) {
-    mkdir($filepath);
+$con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+if ($con->connect_error) {
+    die("Connection failed: " . $con->connect_error);
 }
+
+$filename = time() . '.jpg';
+$filepath = 'profileImg/';
+if (!is_dir($filepath))
+    mkdir($filepath);
+
 if (isset($_FILES['webcam'])) {
     move_uploaded_file($_FILES['webcam']['tmp_name'], $filepath . $filename);
-    $sql = "INSERT INTO user(profile_picture) values('$filename')";
-    $result = mysqli_query($con, $sql);
-    echo $filepath . $filename;
+    if (isset($_GET['username'])) {
+            $username = $_GET['username'];
+            $sql = "UPDATE user SET profile_picture = ? WHERE username = ?";
+            $stmt = $con->prepare($sql);
+            if ($stmt === false) {
+                die('Prepare failed: ' . htmlspecialchars($con->error));
+            }
+            $stmt->bind_param("ss", $filename, $username);
+            if ($stmt->execute() === false) {
+                die('Execute failed: ' . htmlspecialchars($stmt->error));
+            }
+            $stmt->close();
+        }
+        echo $filename;
+    $con->close();
 }

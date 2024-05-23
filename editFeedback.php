@@ -107,7 +107,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                         //insert successfully
                         printf("<div class = 'info'>
                                 Your Feedback <b>%s</b> has been updated.
-                                [ <a href = 'feedbackHistory.php'>Back to Home</a> ]
+                                [ <a href = 'feedbackHistory.php'>Back to <b>Feedback List</b></a> ]
                                </div>", $feedback_id);
                     } else {
                         //unable to insert

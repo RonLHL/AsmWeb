@@ -67,9 +67,7 @@ if (isset($_COOKIE["login-user"])) {
     </head>
     <body>
         <main class="main">
-            <div class="topbar mb-3">
-                <a href="#" name="logout">Logout</a>
-            </div>
+            <?php include 'memberHeader.php';?>
             <?php include_once "./secret/helperMember.php"?>
             <div class="container-fluid">
                 <div class="row">
@@ -85,6 +83,9 @@ if (isset($_COOKIE["login-user"])) {
                                 <div class="profile-section">
                                     <form action="" method="GET">
                                     <h1 class="profile-heading">Member Profile</h1>
+                                    <div class="profile-info"><img src="<?php echo $img?>" 
+                                                                   alt="ProfilePicture" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+                                    </div>
                                     <div class="profile-info"><strong>User Name:</strong> <?php echo isset($username) ? $username : ''; ?></div>
                                     <div class="profile-info"><strong>Full Name:</strong> <?php echo isset($fullname) ? $fullname : ''; ?></div>
                                     <div class="profile-info"><strong>Gender:</strong> <?php echo isset($gender) ? $gender : ''; ?></div>

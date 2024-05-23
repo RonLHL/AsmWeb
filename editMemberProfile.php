@@ -65,11 +65,13 @@ if (isset($_POST['logout'])) {
                             // Retrieve username from the URL
                             if (isset($_GET['username'])) {
                                 $userName = trim($_GET['username']);
+                                if (isset($_GET['image'])) {
+                                    $imageName = trim($_GET['image']);
+                                    // Update the profile picture in the database
+                                }
                             } else {
                                 $userName = "";
                             }
-
-
                             // Create database connection
                             $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
@@ -84,7 +86,7 @@ if (isset($_POST['logout'])) {
 
                             // Check if the record exists
                             if ($row = $result->fetch_object()) {
-                                // Populate form fields with retrieved data
+                                $imgPath = $row->profile_picture;
                                 $fullName = $row->fullname;
                                 $gender = $row->gender;
                                 $birthDate = $row->birthdate;
@@ -106,6 +108,7 @@ if (isset($_POST['logout'])) {
                                 $userName = "";
                             }
 
+                            
                             $fullName = trim($_POST["mbFullName"]);
                             $gender = isset($_POST["mbGender"]) ? trim($_POST["mbGender"]) : "";
                             $birthDate = trim($_POST["mbBirthdate"]);
@@ -141,11 +144,14 @@ if (isset($_POST['logout'])) {
                                 if ($stmt->affected_rows > 0) {
                                     echo "<div class='info'>Profile <b>$userName</b> has been updated.</div>";
                                     echo '<script>';
-                                    echo 'alert(" ' . $username . ' has been updated'.'");';  // Show the alert
-                                    echo 'setTimeout(function() { window.location.href = "memberEvent.php"; }, 1000);';  // Delay the redirection
+                                    echo 'alert(" ' . $userName . ' has been updated' . '");';  // Show the alert
+                                    echo 'setTimeout(function() { window.location.href = "memberProfile.php"; }, 1000);';  // Delay the redirection
                                     echo '</script>';
                                 } else {
                                     echo "Database Error, unable to update. Please try again!";
+                                    echo '<script>';
+                                    echo 'setTimeout(function() { window.location.href = "memberProfile.php"; }, 1000);';  // Delay the redirection
+                                    echo '</script>'; 
                                 }
 
                                 $stmt->close();
@@ -159,14 +165,20 @@ if (isset($_POST['logout'])) {
                             <table>
                                 <tr>
                                 <div>
-                                    
+                                    <?php
+                                    if (!empty($imgPath)) {
+                                        echo '<img src="./profileImg/' . htmlspecialchars($imgPath) . '" name="imgProfile" alt="Profile Picture" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; display: block; margin: 0 auto 20px;" />';
+                                    } else {
+                                        echo "Image Error";
+                                    }
+                                    ?> 
                                 </div>
                                 </tr>
                                 <tr>
                                     <?php
-                                    printf("<input type='button' value='Take Photo' onclick=\"location.href='capture.php?username=%s'\"' />",$userName);
+                                    printf("<input type='button' value='Take Photo' onclick=\"location.href='capture.php?username=%s'\"' />", $userName);
                                     ?>
-                                
+
                                 </tr>
                                 <tr>
                                     <td class="profile-info"><strong>Full Name:</strong></td>
