@@ -1,7 +1,7 @@
 <?php
 $username = $_GET["username"];
 ?>
-
+<link rel="icon" type="image/x-icon" href="./img/logo.jpg">
 <style>
     #my_camera{
         width: 320px;

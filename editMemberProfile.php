@@ -24,6 +24,7 @@ if (isset($_POST['logout'])) {
         <title>Edit Profile</title>
         <link href="css/style.css" rel="stylesheet" type="text/css">
         <link href="css/profile.css" rel="stylesheet" type="text/css">
+        <link rel="icon" type="image/x-icon" href="./img/logo.jpg">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <style>
@@ -148,7 +149,7 @@ if (isset($_POST['logout'])) {
                                     echo 'setTimeout(function() { window.location.href = "memberProfile.php"; }, 1000);';  // Delay the redirection
                                     echo '</script>';
                                 } else {
-                                    echo "Database Error, unable to update. Please try again!";
+                                    echo "Please edit something!";
                                     echo '<script>';
                                     echo 'setTimeout(function() { window.location.href = "memberProfile.php"; }, 1000);';  // Delay the redirection
                                     echo '</script>'; 

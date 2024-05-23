@@ -62,7 +62,7 @@ function mbBirthdate(){
     $error = checkEmpty($birthdate);
     if (!empty($error)) {
         return "Please select your <b>Birthdate</b>!";
-    }
+    } 
     return "";
 }
 

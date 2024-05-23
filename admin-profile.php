@@ -29,6 +29,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Admin-profile</title>
+        <link rel="icon" type="image/x-icon" href="./img/logo.jpg">
         <link href="css/Style.css" rel="stylesheet" type="text/css"/>
         <link href="css/profile.css" rel="stylesheet" type="text/css"/>
         <style>

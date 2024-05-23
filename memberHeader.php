@@ -15,7 +15,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
         <header>
             <h1> 
                 <nav class="nav">
-                    <img class = "logo" src="img/logo.jpg" alt=""/>
+                    <a href="memberEvent.php"><img class = "logo" src="img/logo.jpg" alt=""/></a>
                     <span>ROY Gaming Society</span>
                 </nav>
             </h1>

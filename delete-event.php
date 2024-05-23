@@ -36,6 +36,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
     <head>
         <meta charset="UTF-8">
         <title>Delete Event</title>
+        <link rel="icon" type="image/x-icon" href="./img/logo.jpg">
         <link href="css/Style.css" rel="stylesheet" type="text/css"/>
         <style>
         .table-gray{

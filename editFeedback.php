@@ -27,6 +27,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
     <head>
         <meta charset="UTF-8">
         <title>Edit Feedback</title>
+        <link rel="icon" type="image/x-icon" href="./img/logo.jpg">
         <link href="css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>

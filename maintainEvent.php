@@ -42,6 +42,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
     <head>
         <meta charset="UTF-8">
         <title>Event</title>
+        <link rel="icon" type="image/x-icon" href="./img/logo.jpg">
         <link href="css/Style.css" rel="stylesheet" type="text/css"/>
         <style>
             table{
@@ -51,9 +52,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             .eventId, .eName, .venue, .status, .date, .time, .price{
                 text-align: center;
                 width: 6%;
+                padding: 5px;
             }
             .desc{
-                width: 30%;
+                width: 50%;
                 text-align: justify;
             }
             .button{

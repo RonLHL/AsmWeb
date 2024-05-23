@@ -5,13 +5,18 @@
         <group>
             <file>file:/C:/xampp/htdocs/Assignment/deleteFeedback.php</file>
             <file>file:/C:/xampp/htdocs/Assignment/admin-event.php</file>
-            <file>file:/C:/xampp/htdocs/Assignment/memberProfile.php</file>
+            <file>file:/C:/xampp/htdocs/Assignment/memberHeader.php</file>
             <file>file:/C:/xampp/htdocs/Assignment/secret/helperMember.php</file>
             <file>file:/C:/xampp/htdocs/Assignment/editFeedback.php</file>
             <file>file:/C:/xampp/htdocs/Assignment/saveMemberImage.php</file>
             <file>file:/C:/xampp/htdocs/Assignment/editMemberProfile.php</file>
-            <file>file:/C:/xampp/htdocs/Assignment/capture.php</file>
+            <file>file:/C:/xampp/htdocs/Assignment/admin-header.php</file>
             <file>file:/C:/xampp/htdocs/Assignment/assignment.sql</file>
+            <file>file:/C:/xampp/htdocs/Assignment/edit-event.php</file>
+            <file>file:/C:/xampp/htdocs/Assignment/feedbackAdmin.php</file>
+            <file>file:/C:/xampp/htdocs/Assignment/memberProfile.php</file>
+            <file>file:/C:/xampp/htdocs/Assignment/edit-user.php</file>
+            <file>file:/C:/xampp/htdocs/Assignment/capture.php</file>
             <file>file:/C:/xampp/htdocs/Assignment/add-event.php</file>
         </group>
     </open-files>

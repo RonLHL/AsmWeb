@@ -28,6 +28,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
         <meta charset="UTF-8">
         <title>Delete FeedBack</title>
         <link href="css/style.css" rel="stylesheet" type="text/css"/>
+        <link rel="icon" type="image/x-icon" href="./img/logo.jpg">
     </head>
     <body>
         <?php require_once './secret/helperMember.php'?>

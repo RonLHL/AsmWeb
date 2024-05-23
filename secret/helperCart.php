@@ -41,34 +41,31 @@ function checkCVV($cvv){
 }
 
 function checkExpiryDate($expDate) {
-    // Define the expected format (MM/YY)
+   
     $pattern = '/^(0[1-9]|1[0-2])\/(\d{2})$/';
-
-    // Check if the date matches the pattern
+    
     if (!preg_match($pattern, $expDate, $matches)) {
         return "Invalid expiry date format. Use MM/YY.";
     }
-
-    // Extract month and year from the matched pattern
+    
     $month = intval($matches[1]);
-    $year = intval('20' . $matches[2]); // Convert YY to YYYY
+    $year = intval('20' . $matches[2]); 
 
-    // Get the current month and year
+   
     $currentMonth = intval(date('m'));
     $currentYear = intval(date('Y'));
 
-    // Check if the expiry date is in the future
+   
     if ($year < $currentYear || ($year == $currentYear && $month < $currentMonth)) {
         return "Card expiry date must be in the future.";
     }
 
-    return ""; // No error, return empty string
+    return ""; 
 }
 
 function checkCardNumber($cardNumber){
     $value = preg_replace('/\D/', '', $cardNumber);
-
-    // Check if the card number is all digits and has a valid length
+    
     if (!ctype_digit($value) || strlen($value) < 13 || strlen($value) > 19) {
         return "Invalid card number length.";
     }

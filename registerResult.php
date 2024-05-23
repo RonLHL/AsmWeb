@@ -71,6 +71,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="icon" type="image/x-icon" href="./img/logo.jpg">
         <title>Register result</title>
     </head>
     <body>
